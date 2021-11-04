@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HTGCalendarView">
+        <attr name="fontSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="btnSize" format="dimension" />
+        <attr name="btnColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="HTGCalendarPicker">
+        <attr name="headerVisible" format="boolean" />
+    </declare-styleable>
+</resources>
