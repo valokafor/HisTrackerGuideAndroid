@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="30dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".activity.auth.RegisterActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/margin_20"
+        android:contentDescription="@string/back"
+        android:onClick="onClickLogin"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        style="@style/txtLoginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/margin_20"
+        android:text="@string/sign_in" />
+
+    <EditText
+        android:id="@+id/et_register_name"
+        style="@style/etNormal"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@drawable/back_edit_text"
+        android:drawableStart="@drawable/ic_profile"
+        android:hint="@string/full_name"
+        android:inputType="textPersonName"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/et_register_email"
+        style="@style/etNormal"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@drawable/back_edit_text"
+        android:drawableStart="@drawable/ic_mail"
+        android:hint="@string/sample_email"
+        android:inputType="textEmailAddress"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/et_register_password"
+        style="@style/etNormal"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@drawable/back_edit_text"
+        android:drawableStart="@drawable/ic_password"
+        android:drawableEnd="@drawable/ic_hidden"
+        android:hint="@string/your_password"
+        android:inputType="textPassword"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/et_register_repass"
+        style="@style/etNormal"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@drawable/back_edit_text"
+        android:drawableStart="@drawable/ic_password"
+        android:drawableEnd="@drawable/ic_hidden"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        tools:ignore="Autofill" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_56"
+        android:layout_marginHorizontal="@dimen/margin_50"
+        android:background="@drawable/back_login_btn"
+        android:gravity="center_vertical"
+        android:onClick="onClickSignup"
+        android:padding="@dimen/padding_14">
+
+        <View
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30" />
+
+        <TextView
+            style="@style/txtLoginBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_up" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:background="@drawable/back_circle_blue"
+            android:contentDescription="@string/btnarrow"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/txt_400_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_20"
+        android:text="@string/or_singup_with"
+        android:textColor="@color/textHintColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/padding_12">
+
+        <Button
+            style="@style/btSocial"
+            android:drawableStart="@drawable/ic_google"
+            android:text="@string/google" />
+
+        <Button
+            style="@style/btSocial"
+            android:layout_marginStart="@dimen/margin_12"
+            android:drawableStart="@drawable/ic_facebook"
+            android:text="@string/facebook" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_30"
+        android:gravity="center">
+
+        <TextView
+            style="@style/txt_400_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_have_an_account"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            style="@style/txt_400_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:onClick="onClickLogin"
+            android:text="@string/sign_in"
+            android:textColor="@color/blue" />
+    </LinearLayout>
+
+</LinearLayout>
