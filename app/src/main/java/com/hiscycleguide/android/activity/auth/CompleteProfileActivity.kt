@@ -1,7 +1,6 @@
 package com.hiscycleguide.android.activity.auth
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,14 +8,13 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.activity.MainActivity
 import com.hiscycleguide.android.calendar.HTGCalendarPicker
 import com.hiscycleguide.android.calendar.OnCalendarListener
 import com.hiscycleguide.android.model.UserModel
+import com.hiscycleguide.android.provider.FirebaseProvider
+import com.hiscycleguide.android.provider.ProgressProvider
 import com.hiscycleguide.android.util.toWDMY
 import com.hiscycleguide.android.util.toYMD
 import java.util.*
@@ -39,8 +37,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         true
     }
 
-    private lateinit var database: DatabaseReference
-    private lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: ProgressProvider
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,11 +60,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         cvSpouse = findViewById(R.id.cv_spouse)
         cpSpouse = findViewById(R.id.cp_spouse)
 
-        database = Firebase.database.reference
-
-        progressDialog = ProgressDialog(this@CompleteProfileActivity)
-        progressDialog.setTitle(getString(R.string.progressTitle))
-        progressDialog.setMessage(getString(R.string.progressDetail))
+        progressDialog = ProgressProvider.newInstance(this)
 
         setEvent()
     }
@@ -123,7 +116,7 @@ class CompleteProfileActivity : AppCompatActivity() {
 
             progressDialog.show()
             val appUser = UserModel(userId, name, email, wifename, selectedDate.toYMD(), iFrequence)
-            database.child("users").child(userId).setValue(appUser)
+            FirebaseProvider.getUserReference().child(userId).setValue(appUser)
                 .addOnCompleteListener(this) { ta ->
                     if (ta.isSuccessful) {
                         UserModel.setCurrentUser(appUser)

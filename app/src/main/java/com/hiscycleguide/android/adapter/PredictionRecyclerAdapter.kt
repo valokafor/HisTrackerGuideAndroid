@@ -44,15 +44,23 @@ class PredictionRecyclerAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(model: PredictionModel) {
-            if (model.moodType == MoodType.Ovulation) {
-                ivLogo!!.visibility = View.VISIBLE
-                ivLogo!!.setImageDrawable(context.getDrawable(R.drawable.ic_ovulation))
-                rvMood!!.background = context.getDrawable(R.drawable.gradient_yellow_3)
-            } else if (model.moodType == MoodType.Menstruation) {
-                ivLogo!!.visibility = View.VISIBLE
-                ivLogo!!.setImageDrawable(context.getDrawable(R.drawable.ic_menstruation))
-                rvMood!!.background = context.getDrawable(R.drawable.gradient_red_3)
-            } else {
+            when (model.moodType) {
+                MoodType.Ovulation -> {
+                    ivLogo!!.visibility = View.VISIBLE
+                    ivLogo!!.setImageDrawable(context.getDrawable(R.drawable.ic_ovulation))
+                    rvMood!!.background = context.getDrawable(R.drawable.gradient_yellow_3)
+                }
+                MoodType.Menstruation -> {
+                    ivLogo!!.visibility = View.VISIBLE
+                    ivLogo!!.setImageDrawable(context.getDrawable(R.drawable.ic_menstruation))
+                    rvMood!!.background = context.getDrawable(R.drawable.gradient_red_3)
+                }
+                else -> {
+                    ivLogo!!.visibility = View.GONE
+                }
+            }
+
+            if (model.during < 6) {
                 ivLogo!!.visibility = View.GONE
             }
 

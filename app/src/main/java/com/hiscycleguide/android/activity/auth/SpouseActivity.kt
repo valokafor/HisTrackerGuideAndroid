@@ -1,7 +1,6 @@
 package com.hiscycleguide.android.activity.auth
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -15,6 +14,7 @@ import com.hiscycleguide.android.R
 import com.hiscycleguide.android.calendar.HTGCalendarPicker
 import com.hiscycleguide.android.calendar.OnCalendarListener
 import com.hiscycleguide.android.model.UserModel
+import com.hiscycleguide.android.provider.ProgressProvider
 import com.hiscycleguide.android.util.toWDMY
 import com.hiscycleguide.android.util.toYMD
 import java.util.*
@@ -38,7 +38,7 @@ class SpouseActivity : AppCompatActivity() {
     }
 
     private lateinit var database: DatabaseReference
-    private lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: ProgressProvider
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,9 +63,7 @@ class SpouseActivity : AppCompatActivity() {
 
         database = Firebase.database.reference
 
-        progressDialog = ProgressDialog(this@SpouseActivity)
-        progressDialog.setTitle(getString(R.string.progressTitle))
-        progressDialog.setMessage(getString(R.string.progressDetail))
+        progressDialog = ProgressProvider.newInstance(this)
 
         setEvent()
     }

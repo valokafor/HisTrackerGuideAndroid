@@ -52,6 +52,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_calendar_day"
                             style="@style/txt_600_20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -59,6 +60,7 @@
                             android:textColor="@color/textColor" />
 
                         <TextView
+                            android:id="@+id/tv_calendar_monthyear"
                             style="@style/txt_400_14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -134,7 +136,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/sad"
-                            android:src="@drawable/ic_emoji_happy" />
+                            android:src="@drawable/ic_emoji_sad" />
 
                         <SeekBar
                             android:layout_width="0dp"
@@ -142,7 +144,7 @@
                             android:layout_weight="1"
                             android:progress="60"
                             android:progressTint="@color/textHintColor"
-                            android:thumb="@drawable/ic_emoji_happy" />
+                            android:thumb="@drawable/ic_emoji_good" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -183,6 +185,7 @@
                             android:textColor="@color/textColor" />
 
                         <TextView
+                            android:id="@+id/tv_calendar_today"
                             style="@style/txt_400_13"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -192,13 +195,15 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_calendar_status"
                         style="@style/txt_600_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/your_wife_is_in_good_mood"
+                        android:text="@string/your_wife_is_in_menstruation_mood"
                         android:textColor="@color/textColor" />
 
                     <LinearLayout
+                        android:id="@+id/ll_calendar_prediction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_8"
@@ -218,6 +223,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/iv_calendar_emoji"
                     android:layout_width="@dimen/dimen_56"
                     android:layout_height="@dimen/dimen_56"
                     android:contentDescription="@string/emoji"

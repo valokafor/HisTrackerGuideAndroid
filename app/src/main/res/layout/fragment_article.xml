@@ -16,6 +16,7 @@
             android:layout_weight="1" />
 
         <View
+            android:id="@+id/vw_article_status"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -41,6 +42,7 @@
                 android:text="@string/articles" />
 
             <TextView
+                android:id="@+id/tv_article_date"
                 style="@style/txt_400_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,51 +56,32 @@
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <com.hiscycleguide.android.view.ArticleTapView
+                    android:id="@+id/at_article_body"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_40"
+                    android:layout_marginHorizontal="@dimen/margin_4"
                     android:layout_weight="1"
-                    android:background="@drawable/back_blue_22"
-                    android:gravity="center">
+                    app:atv_isCheckBox="true"
+                    app:atv_title="@string/her_body" />
 
-                    <TextView
-                        style="@style/txt_600_12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/her_body"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <LinearLayout
+                <com.hiscycleguide.android.view.ArticleTapView
+                    android:id="@+id/at_article_emotions"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_40"
-                    android:layout_marginHorizontal="@dimen/margin_8"
+                    android:layout_marginHorizontal="@dimen/margin_4"
                     android:layout_weight="1"
-                    android:background="@drawable/back_stroke_white_22"
-                    android:gravity="center">
+                    app:atv_isCheckBox="false"
+                    app:atv_title="@string/her_emotions" />
 
-                    <TextView
-                        style="@style/txt_600_12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/her_emotions"
-                        android:textColor="@color/textColor" />
-                </LinearLayout>
-
-                <LinearLayout
+                <com.hiscycleguide.android.view.ArticleTapView
+                    android:id="@+id/at_article_actions"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_40"
+                    android:layout_marginHorizontal="@dimen/margin_4"
                     android:layout_weight="1"
-                    android:background="@drawable/back_stroke_white_22"
-                    android:gravity="center">
-
-                    <TextView
-                        style="@style/txt_600_12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/your_actions"
-                        android:textColor="@color/textColor" />
-                </LinearLayout>
+                    app:atv_isCheckBox="false"
+                    app:atv_title="@string/your_actions" />
             </LinearLayout>
         </LinearLayout>
 

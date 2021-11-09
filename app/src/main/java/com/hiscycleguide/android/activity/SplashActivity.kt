@@ -60,6 +60,11 @@ class SplashActivity : AppCompatActivity() {
                         it.message!!,
                         Snackbar.LENGTH_LONG
                     ).show()
+                    Timer().schedule(object : TimerTask() {
+                        override fun run() {
+                            goNextScreen()
+                        }
+                    }, 2000)
                 }
         } else {
             Timer().schedule(object : TimerTask() {

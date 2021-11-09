@@ -1,6 +1,5 @@
 package com.hiscycleguide.android.activity.auth
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.model.UserModel
 import com.hiscycleguide.android.provider.FirebaseProvider
+import com.hiscycleguide.android.provider.ProgressProvider
 import com.hiscycleguide.android.util.getSha1Hex
 import com.hiscycleguide.android.util.isValidEmail
 import com.hiscycleguide.android.util.isValidPassword
@@ -22,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var etRepass: EditText
 
-    private lateinit var progressDialog : ProgressDialog
+    private lateinit var progressDialog : ProgressProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +37,7 @@ class RegisterActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.et_register_password)
         etRepass = findViewById(R.id.et_register_repass)
 
-        progressDialog = ProgressDialog(this@RegisterActivity)
-        progressDialog.setTitle(getString(R.string.progressTitle))
-        progressDialog.setMessage(getString(R.string.progressDetail))
+        progressDialog = ProgressProvider.newInstance(this)
     }
 
     fun onClickLogin(view: View) {
