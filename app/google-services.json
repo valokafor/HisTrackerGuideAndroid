@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "577813154062",
+    "project_id": "histrackerguide",
+    "storage_bucket": "histrackerguide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577813154062:android:efe5c44f35049cb4f76f5f",
+        "android_client_info": {
+          "package_name": "com.hiscycleguide.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577813154062-o9tlcjg8pf733ijp5jksnm9v31qv57vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtL3FrQ2T71k7MGfaiTvOJ_s7M3JNDKD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577813154062-o9tlcjg8pf733ijp5jksnm9v31qv57vt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
