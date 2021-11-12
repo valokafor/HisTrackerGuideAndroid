@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "577813154062-9ha6vsitc55bme2r6q2664iee9tjc2di.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hiscycleguide.android",
+            "certificate_hash": "ffb68b7a4eac858117cc57e64eba3a27ab63062d"
+          }
+        },
+        {
+          "client_id": "577813154062-s1q2pa0ubna9s5m9havk4lee0iv6ukqs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hiscycleguide.android",
+            "certificate_hash": "de0286791ce9e1d3536a20aeed20d0e292d33031"
+          }
+        },
+        {
           "client_id": "577813154062-o9tlcjg8pf733ijp5jksnm9v31qv57vt.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".activity.LandingActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_landing"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_50"
+        android:layout_marginHorizontal="@dimen/margin_40"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_landing_skip"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            style="@style/txtLandingBtn"
+            android:textColor="@color/textColor_50"
+            android:onClick="onClickSkip"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_landing"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dimen_16"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabIndicatorFullWidth="false"
+            app:tabGravity="center"
+            app:tabPadding="@dimen/padding_8"
+            app:tabPaddingStart="@dimen/padding_8"
+            app:tabPaddingEnd="@dimen/padding_8"
+            app:tabIndicatorHeight="0dp"/>
+
+        <TextView
+            android:id="@+id/tv_landing_next"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            style="@style/txtLandingBtn"
+            android:textColor="@color/blue"
+            android:onClick="onClickNext"/>
+    </LinearLayout>
+</LinearLayout>

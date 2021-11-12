@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.auth.LoginActivity">
+
+    <ImageView
+        android:id="@+id/iv_login_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_78"
+        android:layout_marginTop="@dimen/margin_60"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/margin_30"
+        android:layout_marginTop="@dimen/margin_60"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_login_logo">
+
+        <TextView
+            style="@style/txtLoginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/sign_in" />
+
+        <EditText
+            android:id="@+id/et_login_email"
+            style="@style/etNormal"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/back_edit_text"
+            android:drawableStart="@drawable/ic_mail"
+            android:hint="@string/sample_email"
+            android:inputType="textEmailAddress"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/et_login_pass"
+            style="@style/etNormal"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/back_edit_text"
+            android:drawableStart="@drawable/ic_password"
+            android:drawableEnd="@drawable/ic_hidden"
+            android:hint="@string/your_password"
+            android:inputType="textPassword"
+            tools:ignore="Autofill" />
+
+        <TextView
+            style="@style/txtLoginForgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/forgot_password" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_56"
+            android:layout_marginHorizontal="@dimen/margin_50"
+            android:background="@drawable/back_login_btn"
+            android:gravity="center_vertical"
+            android:onClick="onClickSignIn"
+            android:padding="@dimen/padding_14">
+
+            <View
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30" />
+
+            <TextView
+                style="@style/txtLoginBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sign_in" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:background="@drawable/back_circle_blue"
+                android:contentDescription="@string/btnarrow"
+                android:padding="@dimen/padding_8"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/txt_400_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/or_login_with"
+            android:textColor="@color/textHintColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/padding_12">
+
+            <Button
+                style="@style/btSocial"
+                android:drawableStart="@drawable/ic_google"
+                android:text="@string/google"
+                tools:ignore="TextContrastCheck" />
+
+            <Button
+                style="@style/btSocial"
+                android:layout_marginStart="@dimen/margin_12"
+                android:drawableStart="@drawable/ic_facebook"
+                android:text="@string/facebook"
+                tools:ignore="TextContrastCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_30"
+            android:gravity="center">
+
+            <TextView
+                style="@style/txt_400_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/don_t_you_have_an_account"
+                android:textColor="@color/textColor" />
+
+            <TextView
+                style="@style/txt_400_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8"
+                android:onClick="onClickRegister"
+                android:text="@string/sign_up"
+                android:textColor="@color/blue"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

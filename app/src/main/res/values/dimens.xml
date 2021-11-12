@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_80">@dimen/_64sdp</dimen>
+    <dimen name="dimen_75">@dimen/_60sdp</dimen>
+    <dimen name="dimen_60">@dimen/_48sdp</dimen>
+    <dimen name="dimen_56">@dimen/_45sdp</dimen>
+    <dimen name="dimen_44">@dimen/_35sdp</dimen>
+    <dimen name="dimen_40">@dimen/_32sdp</dimen>
+    <dimen name="dimen_30">@dimen/_24sdp</dimen>
+    <dimen name="dimen_24">@dimen/_19sdp</dimen>
+    <dimen name="dimen_20">@dimen/_16sdp</dimen>
+    <dimen name="dimen_16">@dimen/_12sdp</dimen>
+    <dimen name="dimen_12">@dimen/_9sdp</dimen>
+
+
+    <dimen name="radius_16">@dimen/_13sdp</dimen>
+    <dimen name="radius_10">@dimen/_8sdp</dimen>
+    <dimen name="radius_6">@dimen/_5sdp</dimen>
+
+
+    <dimen name="margin_78">@dimen/_60sdp</dimen>
+    <dimen name="margin_60">@dimen/_48sdp</dimen>
+    <dimen name="margin_50">@dimen/_40sdp</dimen>
+    <dimen name="margin_40">@dimen/_32sdp</dimen>
+    <dimen name="margin_30">@dimen/_24sdp</dimen>
+    <dimen name="margin_24">@dimen/_19sdp</dimen>
+    <dimen name="margin_20">@dimen/_16sdp</dimen>
+    <dimen name="margin_16">@dimen/_13sdp</dimen>
+    <dimen name="margin_12">@dimen/_9sdp</dimen>
+    <dimen name="margin_10">@dimen/_8sdp</dimen>
+    <dimen name="margin_8">@dimen/_6sdp</dimen>
+    <dimen name="margin_4">@dimen/_3sdp</dimen>
+
+
+    <dimen name="padding_5">@dimen/_4sdp</dimen>
+    <dimen name="padding_8">@dimen/_6sdp</dimen>
+    <dimen name="padding_10">@dimen/_8sdp</dimen>
+    <dimen name="padding_12">@dimen/_9sdp</dimen>
+    <dimen name="padding_14">@dimen/_11sdp</dimen>
+    <dimen name="padding_16">@dimen/_13sdp</dimen>
+    <dimen name="padding_20">@dimen/_16sdp</dimen>
+    <dimen name="padding_24">@dimen/_19sdp</dimen>
+    <dimen name="padding_30">@dimen/_24sdp</dimen>
+
+
+    <dimen name="font_24">@dimen/_19ssp</dimen>
+    <dimen name="font_22">@dimen/_17ssp</dimen>
+    <dimen name="font_20">@dimen/_16ssp</dimen>
+    <dimen name="font_18">@dimen/_14ssp</dimen>
+    <dimen name="font_16">@dimen/_13ssp</dimen>
+    <dimen name="font_15">@dimen/_12ssp</dimen>
+    <dimen name="font_14">@dimen/_11ssp</dimen>
+    <dimen name="font_13">@dimen/_10ssp</dimen>
+    <dimen name="font_12">@dimen/_9ssp</dimen>
+</resources>
