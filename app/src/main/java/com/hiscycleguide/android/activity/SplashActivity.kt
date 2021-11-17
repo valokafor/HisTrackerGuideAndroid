@@ -32,10 +32,11 @@ class SplashActivity : AppCompatActivity() {
         super.onStart()
 
         val currentUser = FirebaseProvider.getAuth().currentUser
-        if (currentUser != null && currentUser.isEmailVerified) {
-            FirebaseProvider.getUserReference().child(currentUser.uid).get()
+        if (currentUser != null) {
+            FirebaseProvider.getUserFirestore().document(currentUser.uid)
+                .get()
                 .addOnSuccessListener {
-                    val userModel = it!!.getValue(UserModel::class.java)
+                    val userModel = it!!.toObject(UserModel::class.java)
                     UserModel.setCurrentUser(userModel!!)
                     if (userModel.wifename.isNotEmpty()) {
                         startActivity(Intent(this, MainActivity::class.java))
@@ -48,13 +49,15 @@ class SplashActivity : AppCompatActivity() {
                         intent.putExtra("uid", userModel.userId)
                         intent.putExtra("email", userModel.email)
                         intent.putExtra("name", userModel.name)
+                        intent.putExtra("token", userModel.token)
                         startActivity(intent)
                         overridePendingTransition(
                             R.anim.slide_in_right,
                             R.anim.slide_out_left
                         )
                     }
-                }.addOnFailureListener {
+                }
+                .addOnFailureListener {
                     Snackbar.make(
                         this.findViewById(R.id.ll_content),
                         it.message!!,

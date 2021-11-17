@@ -62,7 +62,7 @@ class HTGCalendarView : LinearLayout {
         tvTitle = findViewById(R.id.tv_htc_title)
         gvCalendar = findViewById(R.id.gv_htc_calendar)
 
-        period = UserModel.getCurrentUser().period
+        period = UserModel.getCurrentUser().period.toInt()
 
         if (attrs == null) {
             textColor = Color.BLACK

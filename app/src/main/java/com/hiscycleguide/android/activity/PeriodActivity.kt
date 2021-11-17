@@ -93,18 +93,30 @@ class PeriodActivity : AppCompatActivity() {
         currentUser.mood = selectedDate.toYMD()
 
         progressDialog.show()
-        FirebaseProvider.getUserReference().child(currentUser.userId).setValue(currentUser)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
+
+        FirebaseProvider.getUserFirestore()
+            .document(currentUser.userId)
+            .set(currentUser.toJson())
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
                     UserModel.setCurrentUser(currentUser)
                     onBackPressed()
                 } else {
                     Snackbar.make(
                         this.findViewById(R.id.ll_content),
-                        task.exception.toString(),
+                        it.exception!!.message!!,
                         Snackbar.LENGTH_LONG
                     ).show()
+                    progressDialog.dismiss()
                 }
+                progressDialog.dismiss()
+            }
+            .addOnFailureListener {
+                Snackbar.make(
+                    this.findViewById(R.id.ll_content),
+                    it.message!!,
+                    Snackbar.LENGTH_LONG
+                ).show()
                 progressDialog.dismiss()
             }
     }

@@ -14,7 +14,7 @@ class Utils {
 
         fun getMoodType(date: Date) : MoodType {
             val startDate = UserModel.getCurrentUser().mood.toDateYMD()!!
-            val moodPeriod: Int = UserModel.getCurrentUser().period
+            val moodPeriod: Int = UserModel.getCurrentUser().period.toInt()
 
             val diffDay = date.diffDay(startDate)
             val edd : Int = diffDay % moodPeriod
@@ -29,7 +29,7 @@ class Utils {
 
         fun getMoodIndex(date: Date) : Int {
             val startDate = UserModel.getCurrentUser().mood.toDateYMD()!!
-            val moodPeriod: Int = UserModel.getCurrentUser().period
+            val moodPeriod: Int = UserModel.getCurrentUser().period.toInt()
 
             val diffDay = date.diffDay(startDate)
             return diffDay % moodPeriod
@@ -37,14 +37,14 @@ class Utils {
 
         fun isFirstDay(date: Date) : Boolean {
             val moodDate = UserModel.getCurrentUser().mood.toDateYMD()!!
-            val moodPeriod: Int = UserModel.getCurrentUser().period
+            val moodPeriod: Int = UserModel.getCurrentUser().period.toInt()
             val diffDay = date.diffDay(moodDate)
             return diffDay % moodPeriod == 0 || diffDay % moodPeriod == moodPeriod / 2
         }
 
         fun isEndDay(date: Date) : Boolean {
             val moodDate = UserModel.getCurrentUser().mood.toDateYMD()!!
-            val moodPeriod: Int = UserModel.getCurrentUser().period
+            val moodPeriod: Int = UserModel.getCurrentUser().period.toInt()
             val diffDay = date.diffDay(moodDate)
             return diffDay % moodPeriod == defaultDuring - 1  || diffDay % moodPeriod == moodPeriod / 2 + defaultDuring - 1
         }

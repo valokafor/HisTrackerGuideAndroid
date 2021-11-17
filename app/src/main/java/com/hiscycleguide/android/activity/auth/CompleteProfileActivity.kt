@@ -31,6 +31,7 @@ class CompleteProfileActivity : AppCompatActivity() {
     private var userId = ""
     private var email = ""
     private var name = ""
+    private var token = ""
     private var selectedDate = Date()
     private val otl = View.OnTouchListener { _, _ ->
         cvSpouse.visibility = View.VISIBLE
@@ -51,6 +52,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         userId = intent.getStringExtra("uid")!!
         email = intent.getStringExtra("email")!!
         name = intent.getStringExtra("name")!!
+        token = intent.getStringExtra("token")!!
 
         etWifeName = findViewById(R.id.et_spouse_name)
         etSpouse = findViewById(R.id.et_spouse_mood)
@@ -76,8 +78,8 @@ class CompleteProfileActivity : AppCompatActivity() {
     }
 
     fun onClickContinue(view: View) {
-        val wifename = etWifeName.text.toString()
-        if (wifename.isEmpty()) {
+        val wifeName = etWifeName.text.toString()
+        if (wifeName.isEmpty()) {
             Snackbar.make(
                 this.findViewById(R.id.ll_content),
                 getString(R.string.emptySpouseName),
@@ -115,25 +117,26 @@ class CompleteProfileActivity : AppCompatActivity() {
             }
 
             progressDialog.show()
-            val appUser = UserModel(userId, name, email, wifename, selectedDate.toYMD(), iFrequence)
-            FirebaseProvider.getUserReference().child(userId).setValue(appUser)
-                .addOnCompleteListener(this) { ta ->
-                    if (ta.isSuccessful) {
-                        UserModel.setCurrentUser(appUser)
-                        startActivity(Intent(this, MainActivity::class.java))
-                        overridePendingTransition(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left
-                        )
-                        this.finish()
-                    } else {
-                        Snackbar.make(
-                            this.findViewById(R.id.ll_content),
-                            ta.exception.toString(),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
+            val appUser = UserModel(userId, name, email, wifeName, selectedDate.toYMD(), iFrequence.toString(), token)
+            FirebaseProvider.getUserFirestore().document(userId)
+                .set(appUser.toJson())
+                .addOnSuccessListener {
                     progressDialog.dismiss()
+                    UserModel.setCurrentUser(appUser)
+                    startActivity(Intent(this, MainActivity::class.java))
+                    overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
+                    this.finish()
+                }
+                .addOnFailureListener {
+                    progressDialog.dismiss()
+                    Snackbar.make(
+                        this.findViewById(R.id.ll_content),
+                        it.message!!,
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
         } catch (e: Exception) {
             Snackbar.make(

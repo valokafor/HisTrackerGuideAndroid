@@ -8,7 +8,8 @@ data class UserModel(
     var email: String = "",
     var wifename: String = "",
     var mood: String = "",
-    var period: Int = 28,
+    var period: String = "28",
+    var token: String = "",
 ) {
 
     companion object {
@@ -39,7 +40,8 @@ data class UserModel(
                 userJson["email"]!!,
                 userJson["wifename"]!!,
                 userJson["mood"]!!,
-                userJson["period"]!!.toInt()
+                userJson["period"]!!,
+                userJson["token"]!!,
             )
         }
     }
@@ -52,7 +54,8 @@ data class UserModel(
         map["email"] = email
         map["wifename"] = wifename
         map["mood"] = mood
-        map["period"] = period.toString()
+        map["period"] = period
+        map["token"] = token
 
         return map
     }

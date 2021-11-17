@@ -73,7 +73,7 @@ fun Date.diffDay(compare: Date) : Int {
         if (this.after(compareDate)) {
             break
         }
-        compareDate = compareDate.diffDate(Calendar.DATE, -UserModel.getCurrentUser().period)
+        compareDate = compareDate.diffDate(Calendar.DATE, -UserModel.getCurrentUser().period.toInt())
     }
     val diff: Long = time - compareDate.time
     val sec = diff / 1000

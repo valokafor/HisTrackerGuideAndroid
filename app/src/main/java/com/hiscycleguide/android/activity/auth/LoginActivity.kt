@@ -90,55 +90,38 @@ class LoginActivity : AppCompatActivity() {
 
     private fun freshData(user: FirebaseUser) {
         progressDialog.show()
-        if (!user.isEmailVerified) {
-            user.sendEmailVerification().addOnCompleteListener(this) {
+        FirebaseProvider.getUserFirestore().document(user.uid)
+            .get()
+            .addOnSuccessListener {
+                val currentUser = it!!.toObject(UserModel::class.java)
+                UserModel.setCurrentUser(currentUser!!)
                 progressDialog.dismiss()
-                if (it.isSuccessful) {
-                    Snackbar.make(
-                        this.findViewById(R.id.ll_content),
-                        getString(R.string.notVerifyEmail),
-                        Snackbar.LENGTH_LONG
-                    ).show()
+
+                if (currentUser.wifename.isNotEmpty()) {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
                 } else {
-                    Snackbar.make(
-                        this.findViewById(R.id.ll_content),
-                        it.exception!!.message!!,
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    val intent = Intent(this, CompleteProfileActivity::class.java)
+                    intent.putExtra("uid", user.uid)
+                    intent.putExtra("email", currentUser.email)
+                    intent.putExtra("name", currentUser.name)
+                    startActivity(intent)
+                    overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
                 }
             }
-        } else {
-            FirebaseProvider.getUserReference().child(user.uid).get()
-                .addOnSuccessListener {
-                    val currentUser = it!!.getValue(UserModel::class.java)
-                    UserModel.setCurrentUser(currentUser!!)
-                    progressDialog.dismiss()
-
-                    if (currentUser.wifename.isNotEmpty()) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        overridePendingTransition(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left
-                        )
-                    } else {
-                        val intent = Intent(this, CompleteProfileActivity::class.java)
-                        intent.putExtra("uid", user.uid)
-                        intent.putExtra("email", currentUser.email)
-                        intent.putExtra("name", currentUser.name)
-                        startActivity(intent)
-                        overridePendingTransition(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left
-                        )
-                    }
-                }.addOnFailureListener {
-                    Snackbar.make(
-                        this.findViewById(R.id.ll_content),
-                        it.message!!,
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    progressDialog.dismiss()
-                }
-        }
+            .addOnFailureListener {
+                Snackbar.make(
+                    this.findViewById(R.id.ll_content),
+                    it.message!!,
+                    Snackbar.LENGTH_LONG
+                ).show()
+                progressDialog.dismiss()
+            }
     }
 }
