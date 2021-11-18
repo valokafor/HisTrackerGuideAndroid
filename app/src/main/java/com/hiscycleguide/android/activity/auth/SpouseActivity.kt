@@ -1,7 +1,6 @@
 package com.hiscycleguide.android.activity.auth
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -15,6 +14,8 @@ import com.hiscycleguide.android.R
 import com.hiscycleguide.android.calendar.HTGCalendarPicker
 import com.hiscycleguide.android.calendar.OnCalendarListener
 import com.hiscycleguide.android.model.UserModel
+import com.hiscycleguide.android.provider.FirebaseProvider
+import com.hiscycleguide.android.provider.ProgressProvider
 import com.hiscycleguide.android.util.toWDMY
 import com.hiscycleguide.android.util.toYMD
 import java.util.*
@@ -31,6 +32,7 @@ class SpouseActivity : AppCompatActivity() {
     private var userId = ""
     private var email = ""
     private var name = ""
+    private var token = ""
     private var selectedDate = Date()
     private val otl = View.OnTouchListener { _, _ ->
         cvSpouse.visibility = View.VISIBLE
@@ -38,7 +40,7 @@ class SpouseActivity : AppCompatActivity() {
     }
 
     private lateinit var database: DatabaseReference
-    private lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: ProgressProvider
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +54,7 @@ class SpouseActivity : AppCompatActivity() {
         userId = intent.getStringExtra("uid")!!
         email = intent.getStringExtra("email")!!
         name = intent.getStringExtra("name")!!
+        token = intent.getStringExtra("token")!!
 
         etWifeName = findViewById(R.id.et_spouse_name)
         etSpouse = findViewById(R.id.et_spouse_mood)
@@ -63,9 +66,7 @@ class SpouseActivity : AppCompatActivity() {
 
         database = Firebase.database.reference
 
-        progressDialog = ProgressDialog(this@SpouseActivity)
-        progressDialog.setTitle(getString(R.string.progressTitle))
-        progressDialog.setMessage(getString(R.string.progressDetail))
+        progressDialog = ProgressProvider.newInstance(this)
 
         setEvent()
     }
@@ -124,18 +125,27 @@ class SpouseActivity : AppCompatActivity() {
             }
 
             progressDialog.show()
-            val appUser = UserModel(userId, name, email, wifename, selectedDate.toYMD(), iFrequence)
-            database.child("users").child(userId).setValue(appUser)
-                .addOnCompleteListener(this) { ta ->
-                    if (ta.isSuccessful) {
+            val appUser =
+                UserModel(userId, name, email, wifename, selectedDate.toYMD(), iFrequence.toString(), token)
+
+            FirebaseProvider.getUserFirestore().document(userId).set(appUser)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
                         onBackPressed()
                     } else {
                         Snackbar.make(
                             this.findViewById(R.id.ll_content),
-                            ta.exception.toString(),
+                            it.exception!!.message!!,
                             Snackbar.LENGTH_LONG
                         ).show()
                     }
+                    progressDialog.dismiss()
+                }.addOnFailureListener {
+                    Snackbar.make(
+                        this.findViewById(R.id.ll_content),
+                        it.message!!,
+                        Snackbar.LENGTH_LONG
+                    ).show()
                     progressDialog.dismiss()
                 }
         } catch (e: Exception) {

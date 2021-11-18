@@ -18,6 +18,8 @@
     <color name="red_30">#4bDB1E17</color>
     <color name="red_5">#08DB1E17</color>
     <color name="yellow">#F7C92E</color>
+    <color name="yellow_30">#80F7C92E</color>
+    <color name="yellow_5">#26F7C92E</color>
     <color name="sky">#00F8FF</color>
     <color name="sky_10">#1900F8FF</color>
     <color name="textColor">#120D26</color>

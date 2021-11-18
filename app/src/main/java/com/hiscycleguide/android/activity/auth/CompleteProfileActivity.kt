@@ -1,7 +1,6 @@
 package com.hiscycleguide.android.activity.auth
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,14 +8,13 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.activity.MainActivity
 import com.hiscycleguide.android.calendar.HTGCalendarPicker
 import com.hiscycleguide.android.calendar.OnCalendarListener
 import com.hiscycleguide.android.model.UserModel
+import com.hiscycleguide.android.provider.FirebaseProvider
+import com.hiscycleguide.android.provider.ProgressProvider
 import com.hiscycleguide.android.util.toWDMY
 import com.hiscycleguide.android.util.toYMD
 import java.util.*
@@ -33,14 +31,14 @@ class CompleteProfileActivity : AppCompatActivity() {
     private var userId = ""
     private var email = ""
     private var name = ""
+    private var token = ""
     private var selectedDate = Date()
     private val otl = View.OnTouchListener { _, _ ->
         cvSpouse.visibility = View.VISIBLE
         true
     }
 
-    private lateinit var database: DatabaseReference
-    private lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: ProgressProvider
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +52,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         userId = intent.getStringExtra("uid")!!
         email = intent.getStringExtra("email")!!
         name = intent.getStringExtra("name")!!
+        token = intent.getStringExtra("token")!!
 
         etWifeName = findViewById(R.id.et_spouse_name)
         etSpouse = findViewById(R.id.et_spouse_mood)
@@ -63,11 +62,7 @@ class CompleteProfileActivity : AppCompatActivity() {
         cvSpouse = findViewById(R.id.cv_spouse)
         cpSpouse = findViewById(R.id.cp_spouse)
 
-        database = Firebase.database.reference
-
-        progressDialog = ProgressDialog(this@CompleteProfileActivity)
-        progressDialog.setTitle(getString(R.string.progressTitle))
-        progressDialog.setMessage(getString(R.string.progressDetail))
+        progressDialog = ProgressProvider.newInstance(this)
 
         setEvent()
     }
@@ -83,8 +78,8 @@ class CompleteProfileActivity : AppCompatActivity() {
     }
 
     fun onClickContinue(view: View) {
-        val wifename = etWifeName.text.toString()
-        if (wifename.isEmpty()) {
+        val wifeName = etWifeName.text.toString()
+        if (wifeName.isEmpty()) {
             Snackbar.make(
                 this.findViewById(R.id.ll_content),
                 getString(R.string.emptySpouseName),
@@ -122,25 +117,26 @@ class CompleteProfileActivity : AppCompatActivity() {
             }
 
             progressDialog.show()
-            val appUser = UserModel(userId, name, email, wifename, selectedDate.toYMD(), iFrequence)
-            database.child("users").child(userId).setValue(appUser)
-                .addOnCompleteListener(this) { ta ->
-                    if (ta.isSuccessful) {
-                        UserModel.setCurrentUser(appUser)
-                        startActivity(Intent(this, MainActivity::class.java))
-                        overridePendingTransition(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left
-                        )
-                        this.finish()
-                    } else {
-                        Snackbar.make(
-                            this.findViewById(R.id.ll_content),
-                            ta.exception.toString(),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
+            val appUser = UserModel(userId, name, email, wifeName, selectedDate.toYMD(), iFrequence.toString(), token)
+            FirebaseProvider.getUserFirestore().document(userId)
+                .set(appUser.toJson())
+                .addOnSuccessListener {
                     progressDialog.dismiss()
+                    UserModel.setCurrentUser(appUser)
+                    startActivity(Intent(this, MainActivity::class.java))
+                    overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
+                    this.finish()
+                }
+                .addOnFailureListener {
+                    progressDialog.dismiss()
+                    Snackbar.make(
+                        this.findViewById(R.id.ll_content),
+                        it.message!!,
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
         } catch (e: Exception) {
             Snackbar.make(

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.NotificationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_20"
+            android:contentDescription="@string/back"
+            android:onClick="onClickBack"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            style="@style/txtLoginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/notifications" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_30"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/txt_600_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_30"
+                    android:text="@string/notify_me_when_jessica_is_starting_her"
+                    android:textColor="@color/textColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_12"
+                    android:orientation="vertical">
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_notify_01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/ovulation_phase" />
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_notify_02"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/menstrual_phase" />
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_notify_03"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/luteal_phase" />
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_notify_04"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/follicular_phase" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/txt_600_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:text="@string/select_when_to_be_notified"
+                    android:textColor="@color/textColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_12"
+                    android:orientation="vertical">
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_time_01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isCheckBox="false"
+                        app:title="@string/_3_days_before" />
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_time_02"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isCheckBox="false"
+                        app:title="@string/_2_days_before" />
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_time_03"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isCheckBox="false"
+                        app:title="@string/_1_days_before" />
+
+                    <com.hiscycleguide.android.view.NotifyView
+                        android:id="@+id/nv_time_04"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:isCheckBox="false"
+                        app:title="@string/estimated_start" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/txt_600_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:text="@string/select_time_to_be_notified"
+                    android:textColor="@color/textColor" />
+
+                <EditText
+                    android:id="@+id/et_notification_time"
+                    style="@style/etNormal"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:background="@drawable/back_edit_text"
+                    android:drawableStart="@drawable/ic_period"
+                    android:hint="@string/select_time"
+                    android:inputType="number"
+                    tools:ignore="Autofill" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_56"
+                    android:layout_marginHorizontal="@dimen/margin_50"
+                    android:layout_marginTop="@dimen/margin_60"
+                    android:layout_marginBottom="@dimen/margin_40"
+                    android:background="@drawable/back_login_btn"
+                    android:gravity="center_vertical"
+                    android:onClick="onClickSave"
+                    android:padding="@dimen/padding_14">
+
+                    <TextView
+                        style="@style/txtLoginBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/save" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_notification_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_24"
+        android:elevation="4dp"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/radius_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_20"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/txt_500_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_time"
+                    android:textColor="@color/textColor" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    style="@style/txt_500_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onClickSaveTime"
+                    android:text="@string/save"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
+
+            <TimePicker
+                android:id="@+id/tp_notification_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:headerBackground="@color/blue"
+                android:numbersSelectorColor="@color/blue"
+                android:timePickerMode="clock" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
