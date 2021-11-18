@@ -2,37 +2,42 @@ package com.hiscycleguide.android.calendar
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.GridView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.hiscycleguide.android.R
+import com.hiscycleguide.android.model.UserModel
+import com.hiscycleguide.android.util.*
 import java.text.SimpleDateFormat
 import java.util.*
-import com.hiscycleguide.android.util.diffDate
-import com.hiscycleguide.android.util.toMDY
 
 
 class HTGCalendarView : LinearLayout {
 
-    private lateinit var ivLeft: ImageView
-    private lateinit var ivRight: ImageView
+//    private lateinit var ivLeft: ImageView
+//    private lateinit var ivRight: ImageView
+    private lateinit var cvLeft: CardView
+    private lateinit var cvRight: CardView
     private lateinit var tvTitle: TextView
     private lateinit var gvCalendar: GridView
 
     private var title: String? = null
-    private var fontSize: Float? = 14.0f
     private var textColor: Int? = Color.BLACK
     private var btnSize: Float? = 24.0f
     private var btnColor: Int? = Color.BLUE
 
-    private var selectedDate: Date = Date()
     private var actionDate: Date = Date()
+    private var selectedDate: Date = Date()
+
+    private var period = 28
 
     private var listener: OnCalendarListener? = null
 
@@ -51,13 +56,15 @@ class HTGCalendarView : LinearLayout {
     }
 
     private fun initCalendar(attrs: AttributeSet?) {
-        ivLeft = findViewById(R.id.iv_htc_left)
-        ivRight = findViewById(R.id.iv_htc_right)
+        cvLeft = findViewById(R.id.cv_calendar_back)
+        cvRight = findViewById(R.id.cv_calendar_next)
+
         tvTitle = findViewById(R.id.tv_htc_title)
         gvCalendar = findViewById(R.id.gv_htc_calendar)
 
+        period = UserModel.getCurrentUser().period.toInt()
+
         if (attrs == null) {
-            fontSize = context.resources.getDimension(R.dimen.font_14)
             textColor = Color.BLACK
             btnSize = context.resources.getDimension(R.dimen.dimen_24)
             btnColor = Color.BLUE
@@ -68,10 +75,6 @@ class HTGCalendarView : LinearLayout {
             R.styleable.HTGCalendarView, 0, 0
         )
 
-        fontSize = a.getDimension(
-            R.styleable.HTGCalendarView_fontSize,
-            context.resources.getDimension(R.dimen.font_14)
-        )
         textColor = a.getColor(R.styleable.HTGCalendarView_textColor, Color.BLACK)
         btnSize = a.getDimension(
             R.styleable.HTGCalendarView_btnSize,
@@ -83,11 +86,11 @@ class HTGCalendarView : LinearLayout {
     }
 
     private fun setEvent() {
-        ivLeft.setOnClickListener {
+        cvLeft.setOnClickListener {
             selectedDate = selectedDate.diffDate(Calendar.MONTH, -1)
             setCalendar()
         }
-        ivRight.setOnClickListener {
+        cvRight.setOnClickListener {
             selectedDate = selectedDate.diffDate(Calendar.MONTH, 1)
             setCalendar()
         }
@@ -97,16 +100,9 @@ class HTGCalendarView : LinearLayout {
         super.onFinishInflate()
 
         tvTitle.setTextColor(textColor!!)
-        tvTitle.textSize = coverPixelToDP(fontSize!!)
 
         setCalendar()
         setEvent()
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        invalidate()
-        Log.e("HTGCalendarView", heightMeasureSpec.toString())
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -115,21 +111,14 @@ class HTGCalendarView : LinearLayout {
         title = sdf.format(selectedDate)
         tvTitle.text = title
 
-        val currentMonth = GregorianCalendar(selectedDate.year, selectedDate.month, 1)
-        val daysInMonth = currentMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
-
         val list = arrayListOf<CalendarItem>()
-        list.add(CalendarItem("Sun", true, false, false, false, false, false))
-        list.add(CalendarItem("Mon", true, false, false, false, false, false))
-        list.add(CalendarItem("Tue", true, false, false, false, false, false))
-        list.add(CalendarItem("Wed", true, false, false, false, false, false))
-        list.add(CalendarItem("Thu", true, false, false, false, false, false))
-        list.add(CalendarItem("Fri", true, false, false, false, false, false))
-        list.add(CalendarItem("Sat", true, false, false, false, false, false))
-
-        val moodDate: Date = selectedDate.diffDate(Calendar.DATE, -3)
-        val startDate = moodDate.diffDate(Calendar.DATE, -1)
-        val endDate = moodDate.diffDate(Calendar.DATE, 15)
+        list.add(CalendarItem("Sun", true, false, MoodType.Normal, false, false, false))
+        list.add(CalendarItem("Mon", true, false, MoodType.Normal, false, false, false))
+        list.add(CalendarItem("Tue", true, false, MoodType.Normal, false, false, false))
+        list.add(CalendarItem("Wed", true, false, MoodType.Normal, false, false, false))
+        list.add(CalendarItem("Thu", true, false, MoodType.Normal, false, false, false))
+        list.add(CalendarItem("Fri", true, false, MoodType.Normal, false, false, false))
+        list.add(CalendarItem("Sat", true, false, MoodType.Normal, false, false, false))
 
         val firstDate = Date(selectedDate.year, selectedDate.month, 1)
         val firstWeek = firstDate.getDay()
@@ -140,39 +129,34 @@ class HTGCalendarView : LinearLayout {
         for (i: Int in 0 until firstWeek) {
             val currentDate =
                 Date(previousDate.year, previousDate.month, (daysInPreMonth - firstWeek + 1 + i))
-            val _selected = currentDate.before(endDate) && currentDate.after(startDate)
-            val _isFirst = currentDate.toMDY() == startDate.diffDate(Calendar.DATE, 1).toMDY()
-            val _isEnd = currentDate.toMDY() == endDate.toMDY()
-            val _isAction = currentDate.toMDY() == actionDate.toMDY()
+
             list.add(
                 CalendarItem(
-                    (daysInPreMonth - firstWeek + 1 + i).toString(),
+                    currentDate.tod(),
                     false,
                     false,
-                    _selected,
-                    _isFirst,
-                    _isEnd,
-                    _isAction
+                    Utils.getMoodType(currentDate),
+                    Utils.isFirstDay(currentDate),
+                    Utils.isEndDay(currentDate),
+                    false,
                 )
             )
         }
 
+        val currentMonth = GregorianCalendar(selectedDate.year, selectedDate.month, 1)
+        val daysInMonth = currentMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
         for (i: Int in 1..daysInMonth) {
             val currentDate = Date(selectedDate.year, selectedDate.month, i)
-            val _selected = currentDate.before(endDate) && currentDate.after(startDate)
-            val _isFirst = currentDate.toMDY() == startDate.diffDate(Calendar.DATE, 1).toMDY()
-            val _isEnd = currentDate.toMDY() == endDate.toMDY()
-            val _isAction = currentDate.toMDY() == actionDate.toMDY()
 
             list.add(
                 CalendarItem(
-                    i.toString(),
+                    currentDate.tod(),
                     false,
                     true,
-                    _selected,
-                    _isFirst,
-                    _isEnd,
-                    _isAction
+                    Utils.getMoodType(currentDate),
+                    Utils.isFirstDay(currentDate),
+                    Utils.isEndDay(currentDate),
+                    currentDate.toMDY() == actionDate.toMDY(),
                 )
             )
         }
@@ -182,21 +166,17 @@ class HTGCalendarView : LinearLayout {
         val lastWeek = lastDate.getDay()
         for (i: Int in (lastWeek + 1)..6) {
             val currentDate =
-                Date(nextDate.year, nextDate.month, (daysInPreMonth - firstWeek + 1 + i))
-            val _selected = currentDate.before(endDate) && currentDate.after(startDate)
-            val _isFirst = currentDate.toMDY() == startDate.diffDate(Calendar.DATE, 1).toMDY()
-            val _isEnd = currentDate.toMDY() == endDate.toMDY()
-            val _isAction = currentDate.toMDY() == actionDate.toMDY()
+                Date(nextDate.year, nextDate.month, (i - lastWeek))
 
             list.add(
                 CalendarItem(
-                    (i - lastWeek).toString(),
+                    currentDate.tod(),
                     false,
                     false,
-                    _selected,
-                    _isFirst,
-                    _isEnd,
-                    _isAction
+                    Utils.getMoodType(currentDate),
+                    Utils.isFirstDay(currentDate),
+                    Utils.isEndDay(currentDate),
+                    false,
                 )
             )
         }
@@ -209,15 +189,6 @@ class HTGCalendarView : LinearLayout {
             }
         })
         gvCalendar.adapter = adapter
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-    }
-
-    private fun coverPixelToDP(dps: Float): Float {
-        val scale = this.resources.displayMetrics.density
-        return (dps / scale)
     }
 
     internal class GridAdapter internal constructor(
@@ -252,7 +223,7 @@ class HTGCalendarView : LinearLayout {
             if (item.isWeek) {
                 holder.tvDesc!!.textSize = 12.0f
                 holder.tvDesc!!.setTextColor(context.getColor(R.color.textColor))
-            } else if (item.selected) {
+            } else if (item.type == MoodType.Menstruation) {
                 if (item.isFirst) {
                     holder.llBack!!.background =
                         context.getDrawable(R.drawable.back_calendar_mood_01)
@@ -282,6 +253,37 @@ class HTGCalendarView : LinearLayout {
                     holder.tvDesc!!.setTextColor(context.getColor(R.color.red))
                 } else {
                     holder.tvDesc!!.setTextColor(context.getColor(R.color.red_30))
+                }
+            } else if (item.type == MoodType.Ovulation) {
+                if (item.isFirst) {
+                    holder.llBack!!.background =
+                        context.getDrawable(R.drawable.back_calendar_ovul_01)
+                } else if (item.isEnd) {
+                    if (position % 7 == 0) {
+                        holder.llBack!!.background =
+                            context.getDrawable(R.drawable.back_calendar_ovul_04)
+                    } else {
+                        holder.llBack!!.background =
+                            context.getDrawable(R.drawable.back_calendar_ovul_03)
+                    }
+                } else if (!item.current) {
+                    holder.llBack!!.background =
+                        context.getDrawable(R.drawable.back_calendar_ovul_02)
+                } else if (position % 7 == 0) {
+                    holder.llBack!!.background =
+                        context.getDrawable(R.drawable.back_calendar_ovul_01)
+                } else if (position % 7 == 6) {
+                    holder.llBack!!.background =
+                        context.getDrawable(R.drawable.back_calendar_ovul_03)
+                } else {
+                    holder.llBack!!.background =
+                        context.getDrawable(R.drawable.back_calendar_ovul_02)
+                }
+
+                if (item.current) {
+                    holder.tvDesc!!.setTextColor(context.getColor(R.color.yellow))
+                } else {
+                    holder.tvDesc!!.setTextColor(context.getColor(R.color.yellow_30))
                 }
             } else {
                 if (item.current) {

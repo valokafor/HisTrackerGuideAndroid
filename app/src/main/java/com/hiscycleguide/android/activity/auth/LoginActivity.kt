@@ -1,9 +1,7 @@
 package com.hiscycleguide.android.activity.auth
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +11,7 @@ import com.hiscycleguide.android.R
 import com.hiscycleguide.android.activity.MainActivity
 import com.hiscycleguide.android.model.UserModel
 import com.hiscycleguide.android.provider.FirebaseProvider
+import com.hiscycleguide.android.provider.ProgressProvider
 import com.hiscycleguide.android.util.getSha1Hex
 import com.hiscycleguide.android.util.isValidEmail
 import com.hiscycleguide.android.util.isValidPassword
@@ -22,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etEmail: EditText
     private lateinit var etPass: EditText
 
-    private lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: ProgressProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +34,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.et_login_email)
         etPass = findViewById(R.id.et_login_pass)
 
-        progressDialog = ProgressDialog(this@LoginActivity)
-        progressDialog.setTitle(getString(R.string.progressTitle))
-        progressDialog.setMessage(getString(R.string.progressDetail))
+        progressDialog = ProgressProvider.newInstance(this)
     }
 
     fun onClickRegister(view: View) {
@@ -93,57 +90,38 @@ class LoginActivity : AppCompatActivity() {
 
     private fun freshData(user: FirebaseUser) {
         progressDialog.show()
-        if (!user.isEmailVerified) {
-            user.sendEmailVerification().addOnCompleteListener(this) {
+        FirebaseProvider.getUserFirestore().document(user.uid)
+            .get()
+            .addOnSuccessListener {
+                val currentUser = it!!.toObject(UserModel::class.java)
+                UserModel.setCurrentUser(currentUser!!)
                 progressDialog.dismiss()
-                if (it.isSuccessful) {
-                    Snackbar.make(
-                        this.findViewById(R.id.ll_content),
-                        getString(R.string.notVerifyEmail),
-                        Snackbar.LENGTH_LONG
-                    ).show()
+
+                if (currentUser.wifename.isNotEmpty()) {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
                 } else {
-                    Snackbar.make(
-                        this.findViewById(R.id.ll_content),
-                        it.exception!!.message!!,
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    val intent = Intent(this, CompleteProfileActivity::class.java)
+                    intent.putExtra("uid", user.uid)
+                    intent.putExtra("email", currentUser.email)
+                    intent.putExtra("name", currentUser.name)
+                    startActivity(intent)
+                    overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
                 }
             }
-        } else {
-            FirebaseProvider.getUserReference().child(user.uid).get()
-                .addOnSuccessListener {
-                    val currentUser = it!!.getValue(UserModel::class.java)
-                    UserModel.setCurrentUser(currentUser!!)
-
-                    Log.e("Current User", currentUser.toString())
-                    progressDialog.dismiss()
-
-                    if (currentUser.wifename.isNotEmpty()) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        overridePendingTransition(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left
-                        )
-                    } else {
-                        val intent = Intent(this, CompleteProfileActivity::class.java)
-                        intent.putExtra("uid", user.uid)
-                        intent.putExtra("email", currentUser.email)
-                        intent.putExtra("name", currentUser.name)
-                        startActivity(intent)
-                        overridePendingTransition(
-                            R.anim.slide_in_right,
-                            R.anim.slide_out_left
-                        )
-                    }
-                }.addOnFailureListener {
-                    Snackbar.make(
-                        this.findViewById(R.id.ll_content),
-                        it.message!!,
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    progressDialog.dismiss()
-                }
-        }
+            .addOnFailureListener {
+                Snackbar.make(
+                    this.findViewById(R.id.ll_content),
+                    it.message!!,
+                    Snackbar.LENGTH_LONG
+                ).show()
+                progressDialog.dismiss()
+            }
     }
 }

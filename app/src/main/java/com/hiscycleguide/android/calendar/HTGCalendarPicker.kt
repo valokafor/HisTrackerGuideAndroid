@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.util.diffDate
@@ -19,8 +20,10 @@ import java.util.*
 
 class HTGCalendarPicker : LinearLayout {
 
-    private lateinit var ivLeft: ImageView
-    private lateinit var ivRight: ImageView
+//    private lateinit var ivLeft: ImageView
+//    private lateinit var ivRight: ImageView
+    private lateinit var cvLeft: CardView
+    private lateinit var cvRight: CardView
     private lateinit var tvTitle: TextView
     private lateinit var gvCalendar: GridView
     private lateinit var llHeader: LinearLayout
@@ -48,8 +51,10 @@ class HTGCalendarPicker : LinearLayout {
     }
 
     private fun initCalendar(attrs: AttributeSet?) {
-        ivLeft = findViewById(R.id.iv_htc_left)
-        ivRight = findViewById(R.id.iv_htc_right)
+//        ivLeft = findViewById(R.id.iv_htc_left)
+//        ivRight = findViewById(R.id.iv_htc_right)
+        cvLeft = findViewById(R.id.cv_calendar_back)
+        cvRight = findViewById(R.id.cv_calendar_next)
         tvTitle = findViewById(R.id.tv_htc_title)
         gvCalendar = findViewById(R.id.gv_htc_calendar)
         llHeader = findViewById(R.id.ll_calendar_header)
@@ -67,11 +72,11 @@ class HTGCalendarPicker : LinearLayout {
     }
 
     private fun setEvent() {
-        ivLeft.setOnClickListener {
+        cvLeft.setOnClickListener {
             selectedDate = selectedDate.diffDate(Calendar.MONTH, -1)
             setCalendar()
         }
-        ivRight.setOnClickListener {
+        cvRight.setOnClickListener {
             selectedDate = selectedDate.diffDate(Calendar.MONTH, 1)
             setCalendar()
         }
@@ -88,6 +93,11 @@ class HTGCalendarPicker : LinearLayout {
         invalidate()
         Log.e("HTGCalendarView", heightMeasureSpec.toString())
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    fun setActionDate(date: Date) {
+        actionDate = date
+        setCalendar()
     }
 
     @SuppressLint("SimpleDateFormat")

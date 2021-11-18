@@ -101,6 +101,11 @@
         <item name="fontFamily">@font/montserrat_semibold</item>
     </style>
 
+    <style name="txt_500_14">
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="fontFamily">@font/montserrat_semibold</item>
+    </style>
+
     <style name="txt_500_16">
         <item name="android:textSize">@dimen/font_16</item>
         <item name="fontFamily">@font/montserrat_semibold</item>
@@ -123,6 +128,11 @@
 
     <style name="txt_600_13">
         <item name="android:textSize">@dimen/font_13</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="txt_600_15">
+        <item name="android:textSize">@dimen/font_15</item>
         <item name="fontFamily">@font/montserrat_bold</item>
     </style>
 

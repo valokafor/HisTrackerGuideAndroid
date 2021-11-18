@@ -18,7 +18,7 @@
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/margin_20"
             android:contentDescription="@string/back"
-            android:onClick="onClickLogin"
+            android:onClick="onClickBack"
             android:src="@drawable/ic_back" />
 
         <TextView
@@ -91,7 +91,8 @@
             android:layout_marginBottom="@dimen/margin_40"
             android:background="@drawable/back_login_btn"
             android:gravity="center_vertical"
-            android:padding="@dimen/padding_14">
+            android:padding="@dimen/padding_14"
+            android:onClick="onClickSave">
 
             <TextView
                 style="@style/txtLoginBtn"

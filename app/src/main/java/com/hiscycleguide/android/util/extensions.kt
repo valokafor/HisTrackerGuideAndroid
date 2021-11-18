@@ -1,17 +1,14 @@
 package com.hiscycleguide.android.util
 
-import android.R.attr
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import com.hiscycleguide.android.model.UserModel
+import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
-import android.R.attr.password
-import java.lang.Exception
-import java.lang.StringBuilder
-import java.security.MessageDigest
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.experimental.and
@@ -29,8 +26,72 @@ fun Date.toMDY(): String {
     return SimpleDateFormat("MM-dd-yyyy").format(this)
 }
 
+@SuppressLint("SimpleDateFormat")
+fun Date.toDM_Y(): String {
+    return SimpleDateFormat("dd MMMM, yyyy").format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.toMY(): String {
+    return SimpleDateFormat("MMMM yyyy").format(this)
+}
+
+
+@SuppressLint("SimpleDateFormat")
+fun Date.toWDMY(): String {
+    return SimpleDateFormat("EEEE, dd MMMM, yyyy").format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.toYMD(): String {
+    return SimpleDateFormat("yyyy-MM-dd").format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.toYMDHMS(): String {
+    return SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.toD(): String {
+    return SimpleDateFormat("dd").format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.tod(): String {
+    return SimpleDateFormat("d").format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.tohma(): String {
+    return SimpleDateFormat("hh:mm a").format(this)
+}
+
+fun Date.diffDay(compare: Date) : Int {
+    var compareDate = compare
+    while (true) {
+        if (this.after(compareDate)) {
+            break
+        }
+        compareDate = compareDate.diffDate(Calendar.DATE, -UserModel.getCurrentUser().period.toInt())
+    }
+    val diff: Long = time - compareDate.time
+    val sec = diff / 1000
+    val min = sec / 60
+    val hr = min / 60
+    val day = hr / 24
+    return day.toInt()
+}
+
+
+
 fun String.isValidEmail(): Boolean {
     return android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}
+
+@SuppressLint("SimpleDateFormat")
+fun String.toDateYMD() : Date? {
+    return SimpleDateFormat("yyyy-MM-dd").parse(this)
 }
 
 fun String.isValidPassword(): Boolean {
@@ -57,21 +118,6 @@ fun String.getSha1Hex(): String? {
         ignored.printStackTrace()
         null
     }
-}
-
-@SuppressLint("SimpleDateFormat")
-fun Date.toWDMY(): String {
-    return SimpleDateFormat("EEEE, dd MMMM, yyyy").format(this)
-}
-
-@SuppressLint("SimpleDateFormat")
-fun Date.toYMD(): String {
-    return SimpleDateFormat("yyyy-MM-dd").format(this)
-}
-
-@SuppressLint("SimpleDateFormat")
-fun Date.toD(): String {
-    return SimpleDateFormat("dd").format(this)
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="HTGCalendarView">
-        <attr name="fontSize" format="dimension" />
         <attr name="textColor" format="color" />
         <attr name="btnSize" format="dimension" />
         <attr name="btnColor" format="color" />
@@ -9,5 +8,15 @@
 
     <declare-styleable name="HTGCalendarPicker">
         <attr name="headerVisible" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="NotifyView">
+        <attr name="title" format="string" />
+        <attr name="isCheckBox" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ArticleTapView">
+        <attr name="atv_title" format="string" />
+        <attr name="atv_isCheckBox" format="boolean" />
     </declare-styleable>
 </resources>

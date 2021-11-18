@@ -49,6 +49,8 @@
     <string name="today">Today</string>
     <string name="_12_october_2021">12 October, 2021</string>
     <string name="your_wife_is_in_good_mood">Your wife is in good mood!</string>
+    <string name="your_wife_is_in_ovulation_mood">Your wife is in ovulation mood!</string>
+    <string name="your_wife_is_in_menstruation_mood">Your wife is in menstruation mood!</string>
     <string name="see_predictions">See Predictions</string>
     <string name="_15th_october_2021">15th October 2021</string>
     <string name="her_body">Her body</string>
@@ -90,4 +92,19 @@
     <string name="emptyFrequence">Empty frequence value</string>
     <string name="invalidFrequence">Invalid frequence</string>
     <string name="notVerifyEmail">We just sent a verification email. After confirm, please try that again</string>
+    <string name="notifications">Notifications</string>
+    <string name="notify_me_when_jessica_is_starting_her">Notify me when Jessica is starting her:</string>
+    <string name="ovulation_phase">Ovulation phase</string>
+    <string name="menstrual_phase">Menstrual phase</string>
+    <string name="luteal_phase">Luteal phase</string>
+    <string name="follicular_phase">Follicular phase</string>
+    <string name="select_when_to_be_notified">Select when to be notified</string>
+    <string name="_3_days_before">3 days before her start date</string>
+    <string name="_2_days_before">2 days before her start date</string>
+    <string name="_1_days_before">1 day before her start date</string>
+    <string name="estimated_start">On her estimated start date</string>
+    <string name="select_time_to_be_notified">Select time to be notified</string>
+    <string name="select_time">Select Time</string>
+    <string name="welcome_to_hiscycleguide">Welcome To HisCycleGuide</string>
+    <string name="submit">Submit</string>
 </resources>
