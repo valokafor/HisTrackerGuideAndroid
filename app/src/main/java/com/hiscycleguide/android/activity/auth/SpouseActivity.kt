@@ -1,16 +1,15 @@
 package com.hiscycleguide.android.activity.auth
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.hiscycleguide.android.R
+import com.hiscycleguide.android.activity.MainActivity
 import com.hiscycleguide.android.calendar.HTGCalendarPicker
 import com.hiscycleguide.android.calendar.OnCalendarListener
 import com.hiscycleguide.android.model.UserModel
@@ -39,7 +38,6 @@ class SpouseActivity : AppCompatActivity() {
         true
     }
 
-    private lateinit var database: DatabaseReference
     private lateinit var progressDialog: ProgressProvider
 
 
@@ -63,8 +61,6 @@ class SpouseActivity : AppCompatActivity() {
         etFrequence.setText(getString(R.string._28))
         cvSpouse = findViewById(R.id.cv_spouse)
         cpSpouse = findViewById(R.id.cp_spouse)
-
-        database = Firebase.database.reference
 
         progressDialog = ProgressProvider.newInstance(this)
 
@@ -131,7 +127,10 @@ class SpouseActivity : AppCompatActivity() {
             FirebaseProvider.getUserFirestore().document(userId).set(appUser)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        onBackPressed()
+                        UserModel.setCurrentUser(appUser)
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+//                        onBackPressed()
                     } else {
                         Snackbar.make(
                             this.findViewById(R.id.ll_content),

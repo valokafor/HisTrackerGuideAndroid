@@ -95,13 +95,13 @@ fun String.toDateYMD() : Date? {
 }
 
 fun String.isValidPassword(): Boolean {
-    val pattern: Pattern
-
-    val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
-
-    pattern = Pattern.compile(PASSWORD_PATTERN)
-    val matcher: Matcher = pattern.matcher(this)
-    return matcher.matches()
+//    val pattern: Pattern
+//
+//    val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+//
+//    pattern = Pattern.compile(PASSWORD_PATTERN)
+//    val matcher: Matcher = pattern.matcher(this)
+    return this.length > 6
 }
 
 fun String.getSha1Hex(): String? {
