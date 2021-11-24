@@ -19,6 +19,7 @@ class PreferenceProvider(context: Context) {
         private const val keyNotifyTime = "key_notify_time"
         private const val keyAlarmTime = "key_alarm_time"
         private const val keyCurrentUser = "key_current_user"
+        private const val keyWifeStatus = "key_wife_status"
 
         fun newInstance(context: Context) : PreferenceProvider {
             return PreferenceProvider(context)
@@ -102,6 +103,17 @@ class PreferenceProvider(context: Context) {
             val editor = pref.edit()
             editor.putString(keyCurrentUser, user.toJson().toString())
             editor.apply()
+        }
+
+        fun setWifeStatus(status: String) {
+            val editor = pref.edit()
+            editor.putString(keyWifeStatus, status)
+            editor.apply()
+        }
+
+        fun getWifeStatus() : List<String> {
+            val statusStr = pref.getString(keyWifeStatus, null) ?: return arrayListOf()
+            return statusStr.split(":")
         }
     }
 

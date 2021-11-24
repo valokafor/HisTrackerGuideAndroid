@@ -30,6 +30,7 @@
 
     <TextView
         android:id="@+id/tv_landing_desc"
+        android:layout_marginHorizontal="@dimen/margin_40"
         android:layout_marginTop="@dimen/margin_12"
         android:layout_marginBottom="@dimen/margin_60"
         android:layout_width="wrap_content"
