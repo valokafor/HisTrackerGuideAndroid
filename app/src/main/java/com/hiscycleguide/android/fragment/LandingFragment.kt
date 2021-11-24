@@ -36,8 +36,8 @@ class LandingFragment(private val page: LandingModel) : Fragment() {
         tvDesc = view.findViewById(R.id.tv_landing_desc)
 
         ivLanding.setImageResource(page.image)
-        tvTitle.setText(page.title)
-        tvDesc.setText(page.description)
+        tvTitle.text = page.title
+        tvDesc.text = page.description
     }
 
 }

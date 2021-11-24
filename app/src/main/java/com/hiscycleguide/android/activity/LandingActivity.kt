@@ -3,6 +3,7 @@ package com.hiscycleguide.android.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
@@ -22,6 +23,9 @@ class LandingActivity : AppCompatActivity() {
     private lateinit var tvNext: TextView
     private lateinit var tvSkip: TextView
     private var pageIndex = 0;
+
+    private lateinit var titles: String
+    private lateinit var details: String
 
     var pagerListener: OnPageChangeListener = object : OnPageChangeListener {
         override fun onPageScrolled(
@@ -51,14 +55,22 @@ class LandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
 
+        titles = intent.getStringExtra("titles")!!
+        details = intent.getStringExtra("details")!!
+
         getContent()
     }
 
     private fun getContent() {
         val pages = ArrayList<LandingModel>()
-        pages.add(LandingModel(R.drawable.img_landing_01, R.string.landing_title_01, R.string.landing_desc_01))
-        pages.add(LandingModel(R.drawable.img_landing_02, R.string.landing_title_02, R.string.landing_desc_02))
-        pages.add(LandingModel(R.drawable.img_landing_03, R.string.landing_title_03, R.string.landing_desc_03))
+        val titleList = titles.split(":")
+        val detailList = details.split(":")
+        Log.d("Title", titles.toString())
+        Log.d("Detail", details.toString())
+        pages.add(LandingModel(R.drawable.img_landing_01, titleList.get(0), detailList.get(0)))
+        pages.add(LandingModel(R.drawable.img_landing_02, titleList.get(1), detailList.get(1)))
+        pages.add(LandingModel(R.drawable.img_landing_03, titleList.get(2), detailList.get(2)))
+
         viewPager = findViewById(R.id.vp_landing)
         pagerAdapter = LandingPaperAdapter(supportFragmentManager, pages)
         viewPager.adapter = pagerAdapter

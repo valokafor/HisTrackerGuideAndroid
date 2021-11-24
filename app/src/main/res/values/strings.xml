@@ -35,7 +35,7 @@
     <string name="continue_">Continue</string>
     <string name="profile">Profile</string>
     <string name="prediction">Prediction</string>
-    <string name="articles">Articles</string>
+    <string name="articles">Insights</string>
     <string name="calendar">Calendar</string>
     <string name="_29th">29th</string>
     <string name="october_2021">October 2021</string>
@@ -107,4 +107,11 @@
     <string name="select_time">Select Time</string>
     <string name="welcome_to_hiscycleguide">Welcome To HisCycleGuide</string>
     <string name="submit">Submit</string>
+    <string-array name="brew_array">
+        <item>Cappuccino</item>
+        <item>Espresso</item>
+        <item>Mocha</item>
+        <item>Caffè Americano</item>
+        <item>Cafe Zorro</item>
+    </string-array>
 </resources>
