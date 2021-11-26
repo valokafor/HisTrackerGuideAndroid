@@ -64,6 +64,8 @@
         <item name="android:textAlignment">center</item>
         <item name="fontFamily">@font/montserrat_bold</item>
         <item name="android:textColor">@color/blue</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
     </style>
 
     <style name="txt_400_12">

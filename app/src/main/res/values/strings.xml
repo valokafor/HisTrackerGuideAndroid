@@ -108,6 +108,9 @@
     <string name="select_time">Select Time</string>
     <string name="welcome_to_hiscycleguide">Welcome To HisCycleGuide</string>
     <string name="submit">Submit</string>
+    <string name="hint_enter_email">Enter email</string>
+    <string name="cancel">Cancel</string>
+    <string name="error">Error</string>
     <string-array name="brew_array">
         <item>Cappuccino</item>
         <item>Espresso</item>
