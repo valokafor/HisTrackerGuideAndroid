@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HisCycleGuide</string>
+    <string name="app_name">His Cycle Guide</string>
     <string name="logo">Logo</string>
 
     <string name="landing_title_01">View menstrual calendar</string>
@@ -36,6 +36,7 @@
     <string name="profile">Profile</string>
     <string name="prediction">Prediction</string>
     <string name="articles">Insights</string>
+    <string name="articles_title">Article</string>
     <string name="calendar">Calendar</string>
     <string name="_29th">29th</string>
     <string name="october_2021">October 2021</string>
