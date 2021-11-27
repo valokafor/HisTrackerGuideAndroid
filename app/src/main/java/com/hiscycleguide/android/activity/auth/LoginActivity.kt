@@ -94,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onClickForgetPassword(view: View) {
-        val dialog = MaterialDialog(this).show {
+        MaterialDialog(this).show {
             title(R.string.forgot_password)
             input(
                 hint = getString(R.string.hint_enter_email),
@@ -159,7 +159,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun sendForgotPasswordEmail(email: String) {
+    private fun sendForgotPasswordEmail(email: String) {
         FirebaseAuth.getInstance().sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
