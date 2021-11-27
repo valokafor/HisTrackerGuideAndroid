@@ -93,6 +93,36 @@
             android:layout_height="@dimen/dimen_56"
             android:layout_marginHorizontal="@dimen/margin_20"
             android:layout_marginBottom="@dimen/margin_40"
+            android:background="@drawable/back_login_btn_white"
+            android:gravity="center_vertical"
+            android:onClick="onClickSkip"
+            android:padding="@dimen/padding_14">
+
+            <View
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30" />
+
+            <TextView
+                style="@style/txtSkipBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/skip_spouse_info" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_30"
+                android:layout_height="@dimen/dimen_30"
+                android:background="@drawable/back_circle_blue"
+                android:contentDescription="@string/btnarrow"
+                android:padding="@dimen/padding_8"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_56"
+            android:layout_marginHorizontal="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_40"
             android:background="@drawable/back_login_btn"
             android:gravity="center_vertical"
             android:onClick="onClickContinue"
@@ -117,6 +147,7 @@
                 android:padding="@dimen/padding_8"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
+
     </LinearLayout>
 
     <androidx.cardview.widget.CardView

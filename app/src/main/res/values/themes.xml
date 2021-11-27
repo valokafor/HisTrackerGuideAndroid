@@ -59,6 +59,10 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="txtSkipBtn" parent="txtLoginBtn">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
     <style name="txtLoginForgot">
         <item name="android:textSize">@dimen/font_14</item>
         <item name="android:textAlignment">center</item>

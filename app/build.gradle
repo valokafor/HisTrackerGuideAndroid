@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
     implementation 'com.intuit.ssp:ssp-android:1.0.5'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
