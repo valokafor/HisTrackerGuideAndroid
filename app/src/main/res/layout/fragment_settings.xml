@@ -50,6 +50,7 @@
         android:id="@+id/cv_profile_pinlock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginHorizontal="@dimen/margin_4"
         android:layout_marginVertical="@dimen/margin_8"
         app:cardCornerRadius="@dimen/radius_16">
@@ -108,5 +109,40 @@
                 android:textColor="@color/textColor" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_40"
+        android:background="@drawable/back_login_btn_white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/padding_14">
+
+        <View
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30" />
+
+        <TextView
+            style="@style/txtSkipBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/log_out" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:background="@drawable/back_circle_blue"
+            android:contentDescription="@string/btnarrow"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
 
 </LinearLayout>

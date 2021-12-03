@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.SetOptions
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.calendar.HTGCalendarView
 import com.hiscycleguide.android.calendar.OnCalendarListener
@@ -138,7 +139,7 @@ class CalendarFragment : Fragment() {
             data[Date().toYMDHMS()] = map
 
             progressDialog.show()
-            FirebaseProvider.getStatusFirestore().document(currentUser.userId).set(data)
+            FirebaseProvider.getStatusFirestore().document(currentUser.userId).set(data, SetOptions.merge())
                 .addOnCompleteListener {
                     Snackbar.make(
                         llContent,
