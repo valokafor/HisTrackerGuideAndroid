@@ -65,16 +65,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/margin_20"
-            android:text="@string/forgot_password" />
+            android:text="@string/forgot_password"
+            android:clickable="true"
+            android:onClick="onClickForgetPassword" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:visibility="gone"
             android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_56"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginHorizontal="@dimen/margin_50"
             android:background="@drawable/back_login_btn"
             android:gravity="center_vertical"
@@ -107,11 +111,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20"
             android:text="@string/or_login_with"
+            android:visibility="gone"
             android:textColor="@color/textHintColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:paddingVertical="@dimen/padding_12">
 
             <Button

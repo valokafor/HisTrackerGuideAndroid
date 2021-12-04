@@ -81,6 +81,10 @@ class SpouseActivity : AppCompatActivity() {
         onBackPressed()
     }
 
+    fun onClickSkip(view: View) {
+        setUserAndGoToHome("a", getString(R.string._28))
+    }
+
     fun onClickContinue(view: View) {
         val wifename = etWifeName.text.toString()
         if (wifename.isEmpty()) {
@@ -121,32 +125,7 @@ class SpouseActivity : AppCompatActivity() {
             }
 
             progressDialog.show()
-            val appUser =
-                UserModel(userId, name, email, wifename, selectedDate.toYMD(), iFrequence.toString(), token)
-
-            FirebaseProvider.getUserFirestore().document(userId).set(appUser)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        UserModel.setCurrentUser(appUser)
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-//                        onBackPressed()
-                    } else {
-                        Snackbar.make(
-                            this.findViewById(R.id.ll_content),
-                            it.exception!!.message!!,
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
-                    progressDialog.dismiss()
-                }.addOnFailureListener {
-                    Snackbar.make(
-                        this.findViewById(R.id.ll_content),
-                        it.message!!,
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    progressDialog.dismiss()
-                }
+            setUserAndGoToHome(wifename, iFrequence.toString())
         } catch (e: Exception) {
             Snackbar.make(
                 this.findViewById(R.id.ll_content),
@@ -155,5 +134,33 @@ class SpouseActivity : AppCompatActivity() {
             ).show()
             return
         }
+    }
+
+    private fun setUserAndGoToHome(wifename: String, frequency: String) {
+        val appUser =
+            UserModel(userId, name, email, wifename, selectedDate.toYMD(), frequency, token)
+        FirebaseProvider.getUserFirestore().document(userId).set(appUser)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    UserModel.setCurrentUser(appUser)
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+//                        onBackPressed()
+                } else {
+                    Snackbar.make(
+                        this.findViewById(R.id.ll_content),
+                        it.exception!!.message!!,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+                progressDialog.dismiss()
+            }.addOnFailureListener {
+                Snackbar.make(
+                    this.findViewById(R.id.ll_content),
+                    it.message!!,
+                    Snackbar.LENGTH_LONG
+                ).show()
+                progressDialog.dismiss()
+            }
     }
 }

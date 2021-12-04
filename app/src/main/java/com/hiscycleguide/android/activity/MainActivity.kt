@@ -12,7 +12,7 @@ import com.hiscycleguide.android.R
 import com.hiscycleguide.android.fragment.ArticleFragment
 import com.hiscycleguide.android.fragment.CalendarFragment
 import com.hiscycleguide.android.fragment.PredictionFragment
-import com.hiscycleguide.android.fragment.ProfileFragment
+import com.hiscycleguide.android.fragment.SettingsFragment
 import com.hiscycleguide.android.receiver.AlarmReceiver
 //import com.hiscycleguide.android.service.AlarmService
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         })
         val articleFragment = ArticleFragment.newInstance()
         val predictionFragment = PredictionFragment.newInstance()
-        val profileFragment = ProfileFragment.newInstance()
+        val profileFragment = SettingsFragment.newInstance()
 
         setCurrentFragment(calendarFragment)
 

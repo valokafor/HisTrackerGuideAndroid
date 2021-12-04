@@ -2,10 +2,15 @@ package com.hiscycleguide.android.activity.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.activity.MainActivity
@@ -88,6 +93,24 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    fun onClickForgetPassword(view: View) {
+        MaterialDialog(this).show {
+            title(R.string.forgot_password)
+            input(
+                hint = getString(R.string.hint_enter_email),
+                inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            ) { dialog, email ->
+                if (email.toString().isValidEmail()) {
+                    sendForgotPasswordEmail(email.toString())
+                } else {
+                    showErrorMessage(getString(R.string.invalidEmail))
+                }
+            }
+            negativeButton(R.string.cancel)
+            positiveButton(R.string.submit)
+        }
+    }
+
     private fun freshData(user: FirebaseUser) {
         progressDialog.show()
         FirebaseProvider.getUserFirestore().document(user.uid)
@@ -122,6 +145,30 @@ class LoginActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
                 progressDialog.dismiss()
+            }
+    }
+
+    private fun showErrorMessage(errorMessage: String?) {
+        errorMessage?.let { error ->
+            MaterialDialog(this).show {
+                title(R.string.error)
+                message(text = error)
+                icon(R.drawable.ic_icon_input_lock)
+                negativeButton(R.string.cancel)
+            }
+        }
+    }
+
+    private fun sendForgotPasswordEmail(email: String) {
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Forgot password email sent", Toast.LENGTH_SHORT).show()
+                } else {
+                    task.exception?.localizedMessage?.let { message ->
+                        showErrorMessage(message)
+                    }
+                }
             }
     }
 }
