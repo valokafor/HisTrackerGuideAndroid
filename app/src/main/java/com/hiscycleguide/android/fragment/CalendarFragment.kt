@@ -127,8 +127,8 @@ class CalendarFragment : Fragment() {
             ) {
                 selectedMood = items[position]
             }
-
         }
+
         llSubmit.setOnClickListener {
             val currentUser = UserModel.getCurrentUser()
             val data = hashMapOf<String, HashMap<String, String>>()
@@ -139,7 +139,8 @@ class CalendarFragment : Fragment() {
             data[Date().toYMDHMS()] = map
 
             progressDialog.show()
-            FirebaseProvider.getStatusFirestore().document(currentUser.userId).set(data, SetOptions.merge())
+            FirebaseProvider.getStatusFirestore().document(currentUser.userId)
+                .set(data, SetOptions.merge())
                 .addOnCompleteListener {
                     Snackbar.make(
                         llContent,

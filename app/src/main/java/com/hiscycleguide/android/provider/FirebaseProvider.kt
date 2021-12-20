@@ -19,6 +19,8 @@ class FirebaseProvider {
         private lateinit var userFirestore: CollectionReference
         private lateinit var configFirestore: CollectionReference
         private lateinit var statusFirestore: CollectionReference
+        private lateinit var insightFirestore: CollectionReference
+        private lateinit var articleFirestore: CollectionReference
 
         fun newInstance() : FirebaseProvider {
             return FirebaseProvider()
@@ -43,6 +45,14 @@ class FirebaseProvider {
         fun getStatusFirestore() : CollectionReference {
             return  statusFirestore
         }
+
+        fun getInsightFirestore() : CollectionReference {
+            return  insightFirestore
+        }
+
+        fun getArticleFirestore() : CollectionReference {
+            return  articleFirestore
+        }
     }
 
     init {
@@ -52,6 +62,8 @@ class FirebaseProvider {
         userFirestore = fireStoreDatabase.collection("users")
         configFirestore = fireStoreDatabase.collection("config")
         statusFirestore = fireStoreDatabase.collection("status")
+        insightFirestore = fireStoreDatabase.collection("insights")
+        articleFirestore = fireStoreDatabase.collection("articles")
     }
 
 }
