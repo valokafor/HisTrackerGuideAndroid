@@ -1,7 +1,10 @@
 package com.hiscycleguide.android.fragment
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +15,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
+import com.google.android.material.snackbar.Snackbar
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.adapter.ArticleRecyclerAdapter
 import com.hiscycleguide.android.model.ArticleModel
 import com.hiscycleguide.android.provider.CenterZoomLayoutManager
-import com.hiscycleguide.android.util.*
+import com.hiscycleguide.android.provider.FirebaseProvider
+import com.hiscycleguide.android.provider.ProgressProvider
+import com.hiscycleguide.android.util.MoodType
+import com.hiscycleguide.android.util.Utils
+import com.hiscycleguide.android.util.toMY
+import com.hiscycleguide.android.util.tod
 import com.hiscycleguide.android.view.ArticleTapView
 import java.util.*
 
+@SuppressLint("UseCompatLoadingForDrawables", "UseRequireInsteadOfGet", "NotifyDataSetChanged")
 class ArticleFragment : Fragment() {
 
     private lateinit var rvArticle: RecyclerView
@@ -30,21 +40,13 @@ class ArticleFragment : Fragment() {
     private lateinit var cvNext: CardView
     private lateinit var tvDate: TextView
     private lateinit var vwStatus: View
+    private lateinit var vwContent: View
 
     private var tabSelected = 0
+    private var articles = arrayListOf<ArticleModel>()
+    private var showArticles = arrayListOf<ArticleModel>()
 
-    private var sampleData = arrayListOf(
-        R.drawable.sample_woman_10,
-        R.drawable.sample_woman_11,
-        R.drawable.sample_woman_12,
-        R.drawable.sample_woman_13,
-        R.drawable.sample_woman_14,
-        R.drawable.sample_woman_15,
-        R.drawable.sample_woman_16,
-        R.drawable.sample_woman_17,
-        R.drawable.sample_woman_18,
-        R.drawable.sample_woman_19,
-    )
+    private lateinit var progressDialog: ProgressProvider
 
     companion object {
         fun newInstance(): ArticleFragment {
@@ -62,20 +64,29 @@ class ArticleFragment : Fragment() {
         return view
     }
 
-    @SuppressLint("UseRequireInsteadOfGet", "NotifyDataSetChanged", "UseCompatLoadingForDrawables")
+
     private fun getContent(view: View) {
         rvArticle = view.findViewById(R.id.rv_article_body)
         rvArticle.layoutManager =
             CenterZoomLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
-
-        val articles = arrayListOf<ArticleModel>()
-        for (i in 0..9) {
-            articles.add(ArticleModel(sampleData[i], i % 2 == 0))
-        }
-        adapter = ArticleRecyclerAdapter(context!!, articles)
+        adapter = ArticleRecyclerAdapter(context!!, showArticles)
         rvArticle.adapter = adapter
         rvArticle.adapter!!.notifyDataSetChanged()
         rvArticle.scheduleLayoutAnimation()
+
+        rvArticle.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        Log.d("onScrollStateChanged",
+                            ((recyclerView.layoutManager!!) as CenterZoomLayoutManager).findLastVisibleItemPosition()
+                                .toString()
+                        )
+                    }
+                }
+            }
+        })
 
         val snapHelper: SnapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(rvArticle)
@@ -132,6 +143,63 @@ class ArticleFragment : Fragment() {
         articleTaps.add(tapView1)
         articleTaps.add(tapView2)
         articleTaps.add(tapView3)
+
+        vwContent = view.findViewById(R.id.ll_content)
+
+        progressDialog = ProgressProvider.newInstance(context!!)
+
+        initData()
+    }
+
+    private fun onRead() {
+        Handler().postDelayed({
+            //doSomethingHere()
+        }, 1000)
+    }
+
+    private fun initData() {
+        FirebaseProvider.getArticleFirestore()
+            .get()
+            .addOnSuccessListener {
+                articles.clear()
+                for (document in it.documents) {
+                    val articleModel = document!!.toObject(ArticleModel::class.java)
+//                    if (articleModel!!.status == "Published") {
+//                        Log.d("Article", articleModel.toJson().toString())
+//                        articles.add(articleModel)
+//                    }
+                    articles.add(articleModel!!)
+                }
+                Log.d("Articles", articles.size.toString())
+                refreshList()
+
+            }.addOnFailureListener {
+                Snackbar.make(
+                    vwContent,
+                    it.message!!,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshList() {
+        val tapListString = arrayOf(
+            context!!.getString(R.string.her_body),
+            context!!.getString(R.string.her_emotions),
+            context!!.getString(R.string.your_actions),
+        )
+        showArticles.clear()
+        for (article in articles) {
+//            if (article.type.lowercase(Locale.getDefault()) == tapListString[tabSelected].lowercase(
+//                    Locale.getDefault()
+//                )
+//            ) {
+//                showArticles.add(article)
+//            }
+            showArticles.add(article)
+        }
+        adapter.notifyDataSetChanged()
     }
 
     fun updateTabs() {
@@ -142,6 +210,7 @@ class ArticleFragment : Fragment() {
                 tapView.setCheck(false)
             }
         }
+        refreshList()
     }
 
 }

@@ -118,7 +118,7 @@
     <LinearLayout
         android:id="@+id/linear_layout_logout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_56"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_20"
         android:layout_marginBottom="@dimen/margin_40"
         android:background="@drawable/back_login_btn_white"

@@ -2,6 +2,7 @@ package com.hiscycleguide.android.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hiscycleguide.android.R
 import com.hiscycleguide.android.model.ArticleModel
 import com.hiscycleguide.android.util.inflate
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 
 class ArticleRecyclerAdapter(
     private val context: Context,
@@ -47,11 +50,21 @@ class ArticleRecyclerAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(model: ArticleModel) {
-            ivArticle!!.setImageResource(model.image)
-            if (model.isMarked) {
-                llMark!!.background = context.getDrawable(R.drawable.back_blue_15)
-                ivMark!!.setImageResource(R.drawable.ic_mark)
-            }
+            var imageUrl = model.imageUrl;
+            if (imageUrl.isEmpty()) imageUrl = "imageUrl"
+            Picasso.get()
+                .load(imageUrl)
+                .into(ivArticle, object : Callback {
+                    override fun onSuccess() {
+                        Log.d("Picasso", "success")
+                    }
+
+                    override fun onError(e: Exception?) {
+                        Log.d("Picasso", "error")
+                    }
+                })
+            tvUser!!.text = model.byname
+            tvTitle!!.text = model.title
         }
     }
 }
